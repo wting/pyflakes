@@ -50,6 +50,16 @@ class Test(TestCase):
         [1 for a, b in [(1, 2)]]
         ''')
 
+    def test_variableUsedOutsideListComp(self):
+        """
+        Test that a variable defined in a list comprehension is not used
+        outside of the list comprehension.
+        """
+        self.flakes('''
+        [x for x in (1, 2, 3)]
+        x
+        ''', m.VariableUsedOutsideListComp)
+
     def test_redefinedInGenerator(self):
         """
         Test that reusing a variable in a generator does not raise
